@@ -12,11 +12,8 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <div v-bind="attrs" v-on="on" class="white--text">
-            {{ currentOrg.name }}
-            <span v-if="isChildOrg">
-              <font-awesome-icon icon="chevron-right" class="mx-1" />
-              {{ currentChildOrg.name.slice(0, 8) }}</span
-            >
+            <span v-if="isChildOrg">{{ `${parentOrg.name} > ${childOrg.name.slice(0, 8)}` }}</span>
+            <span v-else>{{ currentOrg.name }}</span>
           </div>
         </template>
 
@@ -78,10 +75,11 @@ export default {
     //
   }),
   computed: {
-    ...mapState(['currentOrg', 'activeView', 'isChildOrg', 'currentChildOrg']),
+    ...mapState(['currentOrg', 'activeView', 'isChildOrg', 'childOrg', 'parentOrg']),
   },
   methods: {
     routeTo(view) {
+      console.log(this.parentOrg, this.childOrg);
       if (view === 'UPDATE' || view === 'CREATE' || view === 'LIST') {
         this.$router.push('/organizations');
       } else if (view === 'DASHBOARD') {

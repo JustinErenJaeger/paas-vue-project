@@ -11,7 +11,8 @@ export default new Vuex.Store({
     currentOrg: {},
     recentOrgs: [],
     isChildOrg: null,
-    currentChildOrg: {},
+    childOrg: {},
+    parentOrg: {},
   },
   mutations: {
     SET_USERS(state, users) {
@@ -20,8 +21,13 @@ export default new Vuex.Store({
     SET_SELECTED_ORG_DATA(state, organization) {
       state.currentOrg = organization;
     },
-    SET_SELECTED_CHILD_ORG_DATA(state, childOrganization) {
-      state.currentChildOrg = childOrganization;
+    SET_CHILD_ORG(state, childOrganization) {
+      state.childOrg = childOrganization;
+    },
+    SET_PARENT_ORG(state, childOrganization) {
+      // eslint-disable-next-line max-len
+      const parent = state.currentUser.organizations.find((org) => org.id === childOrganization.parentId);
+      state.parentOrg = parent;
     },
     SET_IS_CHILD_ORG_RECENTS(state, value) {
       state.isChildOrg = value;
@@ -36,6 +42,7 @@ export default new Vuex.Store({
       if (state.recentOrgs.indexOf(organization) >= 0) {
         state.recentOrgs.splice(state.recentOrgs.indexOf(organization), 1);
         state.recentOrgs.unshift(organization);
+        state.recentOrgs.slice(0, 3);
       } else {
         state.recentOrgs.unshift(organization);
       }
@@ -74,18 +81,21 @@ export default new Vuex.Store({
               name: 'Child1',
               type: 'type',
               address: 'address',
+              parentId: 0,
             },
             {
               id: 1,
               name: 'Child2',
               type: 'type',
               address: 'address',
+              parentId: 0,
             },
             {
               id: 2,
               name: 'Child3',
               type: 'type',
               address: 'address',
+              parentId: 0,
             }],
           },
           {
@@ -106,18 +116,21 @@ export default new Vuex.Store({
               name: 'Child1',
               type: 'type',
               address: 'address',
+              parentId: 2,
             },
             {
               id: 1,
               name: 'Child2',
               type: 'type',
               address: 'address',
+              parentId: 2,
             },
             {
               id: 2,
               name: 'Child3',
               type: 'type',
               address: 'address',
+              parentId: 2,
             }],
           },
           {
@@ -160,18 +173,21 @@ export default new Vuex.Store({
               name: 'Child Org 1',
               type: 'type',
               address: 'address',
+              parentId: 0,
             },
             {
               id: 1,
               name: 'Child Org 2',
               type: 'type',
               address: 'address',
+              parentId: 0,
             },
             {
               id: 2,
               name: 'Child Org 3',
               type: 'type',
               address: 'address',
+              parentId: 0,
             }],
           }],
         },
@@ -202,8 +218,11 @@ export default new Vuex.Store({
     selectedOrgData({ commit }, organization) {
       commit('SET_SELECTED_ORG_DATA', organization);
     },
-    selectedChildOrgData({ commit }, childOrganization) {
-      commit('SET_SELECTED_CHILD_ORG_DATA', childOrganization);
+    setChildOrg({ commit }, childOrganization) {
+      commit('SET_CHILD_ORG', childOrganization);
+    },
+    setParentOrg({ commit }, parentOrganization) {
+      commit('SET_PARENT_ORG', parentOrganization);
     },
     setActiveView({ commit }, currentView) {
       commit('SET_ACTIVE_VIEW', currentView);

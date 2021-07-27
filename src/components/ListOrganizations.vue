@@ -24,9 +24,31 @@
         hide-default-header
         hide-default-footer
         class="elevation-1"
+        :item-key="'null'"
       >
-        <template v-slot:item.editBtn="{ item }">
+        <template v-slot:item.name="{ item }">
+          {{
+            item.parentId >= 0
+              ? `${currentUser.organizations.find((org) => org.id === item.parentId).name} > ${
+                  item.name
+                }`
+              : item.name
+          }}
+        </template>
+        <template v-slot:item.btn="{ item }">
           <v-btn
+            v-if="item.parentId >= 0"
+            class="mr-0 switch-org-btn"
+            fab
+            dark
+            :elevation="0"
+            small
+            color="#106CC8"
+            @click="setActiveData('RECENTS', item, true)"
+          >
+            <font-awesome-icon icon="exchange-alt" /> </v-btn
+          ><v-btn
+            v-else
             class="mr-0 switch-org-btn"
             fab
             dark
@@ -34,8 +56,7 @@
             small
             color="#106CC8"
             @click="setActiveData('RECENTS', item, false)"
-          >
-            <font-awesome-icon icon="exchange-alt" /> </v-btn
+          ></v-btn
         ></template>
       </v-data-table>
       <v-data-table
@@ -49,7 +70,7 @@
         item-key="name"
         show-expand
       >
-        <template v-slot:item.editBtn="{ item }">
+        <template v-slot:item.btn="{ item }">
           <v-btn
             class="mr-0 switch-org-btn"
             fab
@@ -78,7 +99,7 @@
                   :elevation="0"
                   small
                   color="#106CC8"
-                  @click="setActiveData('ADD', item, true)"
+                  @click="setActiveData('LIST', item, true)"
                   ><font-awesome-icon icon="exchange-alt"/></v-btn></template
             ></v-data-table></td
         ></template>
@@ -102,7 +123,7 @@ export default {
         width: '80%',
       },
       {
-        value: 'editBtn',
+        value: 'btn',
         width: '10%',
       },
     ],
@@ -128,30 +149,30 @@ export default {
         width: '80%',
       },
       {
-        value: 'editBtn',
+        value: 'btn',
         width: '10%',
       },
     ],
   }),
   computed: {
-    ...mapState(['currentUser', 'recentOrgs', 'currentOrg']),
+    ...mapState(['currentUser', 'recentOrgs', 'currentOrg', 'isChildOrg', 'parentOrg', 'childOrg']),
   },
   methods: {
     setActiveData(list, organization, value) {
-      if (!value) {
-        this.$store.dispatch('selectedOrgData', organization);
-        if (list === 'RECENTS' && value === false) {
-          this.$store.dispatch('reorderRecents', organization);
-        } else if (list === 'LIST' && value === false) {
-          this.$store.dispatch('setRecentOrgs', organization);
-        }
-      } else {
-        this.$store.dispatch('selectedChildOrgData', organization);
+      this.$store.dispatch('setIsChildOrg', value);
+      this.$store.dispatch('selectedOrgData', organization);
+      if (list === 'RECENTS') {
+        this.$store.dispatch('reorderRecents', organization);
+      } else if (list === 'LIST') {
+        this.$store.dispatch('setRecentOrgs', organization);
       }
-
+      if (value) {
+        this.$store.dispatch('setParentOrg', organization);
+        this.$store.dispatch('setChildOrg', organization);
+        this.$store.dispatch('setParentOrg', organization);
+      }
       this.$store.dispatch('setActiveView', 'DASHBOARD');
       this.$router.push('/dashboard');
-      this.$store.dispatch('setIsChildOrg', value);
     },
   },
 };

@@ -20,7 +20,6 @@ export default {
   },
   watch: {
     currentOrg() {
-      console.log(this.currentOrg);
       if (this.currentOrg === {}) {
         this.$router.push('/organizations');
         this.$store.dispatch('setActiveView', 'LIST');

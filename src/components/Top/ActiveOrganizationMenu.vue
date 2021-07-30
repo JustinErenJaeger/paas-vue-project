@@ -9,6 +9,7 @@
         nudge-bottom="13"
         transition="scale-transition"
         origin="top right"
+        min-width="300"
       >
         <template v-slot:activator="{ on, attrs }">
           <div v-bind="attrs" v-on="on" class="white--text">
@@ -34,7 +35,7 @@
                 @click="routeTo('UPDATE')"
               >
                 <v-list-item-icon>
-                  <font-awesome-icon icon="pencil-alt" />
+                  <font-awesome-icon color="#106CC8" icon="pencil-alt" />
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Update Organization</v-list-item-title>
@@ -42,7 +43,7 @@
               </v-list-item>
               <v-list-item v-if="activeView === 'DASHBOARD'" @click="routeTo('LIST')">
                 <v-list-item-icon>
-                  <font-awesome-icon icon="exchange-alt" />
+                  <font-awesome-icon color="#106CC8" icon="exchange-alt" />
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Switch Organization</v-list-item-title>
@@ -53,7 +54,7 @@
                 @click="routeTo('DASHBOARD')"
               >
                 <v-list-item-icon>
-                  <font-awesome-icon icon="columns" />
+                  <font-awesome-icon color="#106CC8" icon="columns" />
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Dashboard</v-list-item-title>

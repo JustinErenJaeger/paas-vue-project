@@ -49,9 +49,9 @@
 
 <script>
 import { mapState } from 'vuex';
-import ListOrganizations from '../components/ListOrganizations.vue';
-import UpdateOrganizationForm from '../components/UpdateOrganizationForm.vue';
-import CreateOrganizationForm from '../components/CreateOrganizationForm.vue';
+import ListOrganizations from '../components/Organizations/ListOrganizations.vue';
+import UpdateOrganizationForm from '../components/Organizations/UpdateOrganizationForm.vue';
+import CreateOrganizationForm from '../components/Organizations/CreateOrganizationForm.vue';
 
 export default {
   data: () => ({

@@ -8,7 +8,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import AppBar from './components/AppBar.vue';
+import AppBar from './components/Top/AppBar.vue';
 
 export default {
   data: () => ({

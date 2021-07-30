@@ -26,18 +26,11 @@
         class="elevation-1"
         :item-key="'null'"
       >
-        <template v-slot:item.name="{ item }">
-          {{
-            item.parentId >= 0
-              ? `${currentUser.organizations.find((org) => org.id === item.parentId).name} > ${
-                  item.name
-                }`
-              : item.name
-          }}
+        <template v-slot:[`item.name`]="{ item }">
+          {{ setOrgName(item) }}
         </template>
-        <template v-slot:item.btn="{ item }">
+        <template v-slot:[`item.btn`]="{ item }">
           <v-btn
-            v-if="item.parentId >= 0"
             class="mr-0 switch-org-btn"
             fab
             dark
@@ -45,18 +38,7 @@
             small
             color="#106CC8"
             @click="setActiveData('RECENTS', item, true)"
-          >
-            <font-awesome-icon icon="exchange-alt" /> </v-btn
-          ><v-btn
-            v-else
-            class="mr-0 switch-org-btn"
-            fab
-            dark
-            :elevation="0"
-            small
-            color="#106CC8"
-            @click="setActiveData('RECENTS', item, false)"
-          ></v-btn
+            ><font-awesome-icon icon="exchange-alt" /> </v-btn
         ></template>
       </v-data-table>
       <v-data-table
@@ -70,7 +52,7 @@
         item-key="name"
         show-expand
       >
-        <template v-slot:item.btn="{ item }">
+        <template v-slot:[`item.btn`]="{ item }">
           <v-btn
             class="mr-0 switch-org-btn"
             fab
@@ -91,7 +73,7 @@
               :items="item.children"
               hide-default-footer
               class="rounded-0"
-              ><template v-slot:item.btn="{ item }"
+              ><template v-slot:[`item.btn`]="{ item }"
                 ><v-btn
                   class="mr-0"
                   fab
@@ -173,6 +155,14 @@ export default {
       }
       this.$store.dispatch('setActiveView', 'DASHBOARD');
       this.$router.push('/dashboard');
+    },
+    setOrgName(item) {
+      if (item.parentId >= 0) {
+        return `${this.currentUser.organizations.find((org) => org.id === item.parentId).name} > ${
+          item.name
+        }`;
+      }
+      return item.name;
     },
   },
 };

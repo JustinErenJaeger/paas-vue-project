@@ -8,6 +8,7 @@
         offset-x
         transition="scale-transition"
         origin="top right"
+        min-width="300"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-avatar v-bind="attrs" v-on="on">
@@ -32,7 +33,7 @@
             <v-list-item-group color="primary">
               <v-list-item>
                 <v-list-item-icon>
-                  <font-awesome-icon icon="cog" />
+                  <font-awesome-icon color="#106CC8" icon="cog" />
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Settings</v-list-item-title>
@@ -40,7 +41,7 @@
               </v-list-item>
               <v-list-item>
                 <v-list-item-icon>
-                  <font-awesome-icon icon="key" />
+                  <font-awesome-icon color="#106CC8" icon="key" />
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Security</v-list-item-title>
@@ -49,7 +50,7 @@
               <v-divider></v-divider>
               <v-list-item>
                 <v-list-item-icon>
-                  <font-awesome-icon icon="users" />
+                  <font-awesome-icon color="#106CC8" icon="users" />
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Switch Organisation</v-list-item-title>
@@ -57,7 +58,7 @@
               </v-list-item>
               <v-list-item @click="logoutUser">
                 <v-list-item-icon>
-                  <font-awesome-icon icon="sign-out-alt" />
+                  <font-awesome-icon color="#106CC8" icon="sign-out-alt" />
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Logout</v-list-item-title>
@@ -86,14 +87,14 @@ export default {
   data: () => ({
     //
   }),
+  computed: {
+    ...mapState(['currentUser']),
+  },
   methods: {
     logoutUser() {
       this.$store.dispatch('logoutUser');
       this.$router.push('/');
     },
-  },
-  computed: {
-    ...mapState(['currentUser']),
   },
 };
 </script>

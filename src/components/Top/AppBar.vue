@@ -1,7 +1,9 @@
 <template>
   <v-app-bar id="app-bar" relative app color="#106CC8" flat height="75">
     <v-spacer />
-    <active-organization-menu></active-organization-menu>
+    <parent-organization-menu class="mr-2" />
+    <font-awesome-icon color="white" icon="chevron-right" />
+    <child-organization-menu class="ml-2 mr-4" />
     <user-profile />
   </v-app-bar>
 </template>
@@ -9,14 +11,15 @@
 <script>
 import { mapState } from 'vuex';
 import UserProfile from './UserProfile.vue';
-import ActiveOrganizationMenu from './ActiveOrganizationMenu.vue';
+import ParentOrganizationMenu from './ParentOrganizationMenu.vue';
+import ChildOrganizationMenu from './ChildOrganizationMenu.vue';
 
 export default {
   data: () => ({
     //
   }),
   computed: {
-    ...mapState(['currentOrg', 'activeView']),
+    ...mapState(['currentOrg', 'activeView', 'isChildOrg']),
   },
   watch: {
     currentOrg() {
@@ -28,7 +31,8 @@ export default {
   },
   components: {
     'user-profile': UserProfile,
-    'active-organization-menu': ActiveOrganizationMenu,
+    'parent-organization-menu': ParentOrganizationMenu,
+    'child-organization-menu': ChildOrganizationMenu,
   },
 };
 </script>

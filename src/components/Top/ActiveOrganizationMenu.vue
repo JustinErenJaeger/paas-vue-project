@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-center mr-5">
+    <div class="text-center">
       <v-menu
         :close-on-content-click="true"
         :nudge-width="200"
@@ -13,8 +13,16 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <div v-bind="attrs" v-on="on" class="white--text">
-            <span v-if="isChildOrg">{{ `${parentOrg.name} > ${childOrg.name.slice(0, 8)}` }}</span>
-            <span v-else>{{ currentOrg.name }}</span>
+            <!-- <div v-if="isChildOrg">
+              <span
+                >{{ parentOrg.name }} <font-awesome-icon color="#106CC8" icon="chevron-right" />
+                {{ childOrg.name.slice(0, 8) }}</span
+              >
+            </div>
+            <div v-else>
+              <span>{{ currentOrg.name }}</span>
+            </div> -->
+            test
           </div>
         </template>
 
